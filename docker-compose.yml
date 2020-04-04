@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  express:
+    build:
+      context: ./express.back
+      dockerfile: Docker/development
+    volumes:
+      - type: bind
+        source: ./express.back
+        target: /App
+    command: yarn start
+    ports:
+      - "8081:8081"
+  flask:
+    build:
+      context: ./flask.back
+      dockerfile: Docker/development
+    volumes:
+      - type: bind
+        source: ./flask.back
+        target: /App
+    command: python3 /App/src/main.py
+    ports:
+      - "8082:8082"
+  vue:
+    build:
+      context: ./vuetify.front
+      dockerfile: Docker/development
+    volumes:
+      - type: bind
+        source: ./vuetify.front
+        target: /App
+    command: yarn serve
+    ports:
+      - "8080:8080"
