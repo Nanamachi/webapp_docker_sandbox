@@ -5,3 +5,5 @@ RUN pip3 install pipenv
 
 COPY Pipfile* ./
 RUN pipenv install --deploy
+
+ENV FLASK_ENV=development
