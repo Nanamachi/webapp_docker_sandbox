@@ -8,6 +8,9 @@ services:
       - type: bind
         source: ./express.back
         target: /App
+      - type: volume
+        source: express_node_modules
+        target: /App/node_modules
     command: yarn start
     ports:
       - "8081:8081"
@@ -30,6 +33,12 @@ services:
       - type: bind
         source: ./vuetify.front
         target: /App
+      - type: volume
+        source: vuetify_node_modules
+        target: /App/node_modules
     command: yarn serve
     ports:
       - "8080:8080"
+volumes:
+  express_node_modules:
+  vuetify_node_modules:
