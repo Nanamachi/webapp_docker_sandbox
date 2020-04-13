@@ -1,3 +1,9 @@
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import {User} from "./typeorm/entity/User";
+
+createConnection().catch(error => console.log(error));
+
 import express from 'express'
 
 const app: express.Express = express()
