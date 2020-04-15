@@ -1,6 +1,3 @@
 FROM node:lts
 RUN mkdir /App
 WORKDIR /App
-
-COPY ./package.json ./yarn.lock ./
-RUN yarn install --frozen-lockfile

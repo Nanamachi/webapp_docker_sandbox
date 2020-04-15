@@ -1,5 +1,20 @@
 version: '3.5'
 services:
+  db:
+    image: postgres:12
+    expose:
+      - 5432
+    volumes:
+      - type: bind
+        source: ./postgres/init
+        target: /docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: postgresql
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    hostname: postgres
+    restart: always
+    user: root
   express:
     build:
       context: ./express.back
@@ -8,9 +23,6 @@ services:
       - type: bind
         source: ./express.back
         target: /App
-      - type: volume
-        source: express_node_modules
-        target: /App/node_modules
     command: yarn start
     ports:
       - "8081:8081"
@@ -33,27 +45,6 @@ services:
       - type: bind
         source: ./vuetify.front
         target: /App
-      - type: volume
-        source: vuetify_node_modules
-        target: /App/node_modules
     command: yarn serve
     ports:
       - "8080:8080"
-  db:
-    image: postgres:12
-    expose:
-      - 5432
-    volumes:
-      - type: bind
-        source: ./postgres/init
-        target: /docker-entrypoint-initdb.d
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: postgresql
-      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-    hostname: postgres
-    restart: always
-    user: root
-volumes:
-  express_node_modules:
-  vuetify_node_modules:
